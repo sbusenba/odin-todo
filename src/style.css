@@ -1,3 +1,20 @@
 body {
     background-color: coral;
 }
+.itemDiv{
+    margin:5px;
+    padding:10px;
+    background-color: cornflowerblue;
+}
+.itemTitleDiv {
+    font-weight: 700;
+}
+.navBar{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.editDiv{
+    display:flex;
+    flex-direction:column;
+}
