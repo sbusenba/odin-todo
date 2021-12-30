@@ -5,9 +5,18 @@ body {
     margin:5px;
     padding:10px;
     background-color: cornflowerblue;
+    display:flex;
+    flex-direction: row;
+    border-radius:3px;
 }
 .itemTitleDiv {
     font-weight: 700;
+}
+.itemTextDiv{
+    flex:auto;
+}
+button{
+    flex:0 0 auto;
 }
 .navBar{
     display:flex;

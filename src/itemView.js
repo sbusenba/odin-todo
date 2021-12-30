@@ -1,5 +1,6 @@
 const itemView = (item) => {
-    
+    console.log('itemview called on:')
+    console.table(item)
     let itemDiv = document.createElement('div')
     itemDiv.classList.add('itemDiv')
     if (item.selected){
