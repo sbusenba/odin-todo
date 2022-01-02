@@ -4,6 +4,7 @@ import navDiv from './navView'
 import editView from './editView'
 
 function addItem(item){
+    item.priority = toDoList.length 
     toDoList.push(item)
     save()
 }
@@ -26,10 +27,51 @@ function getSelected(){
         console.table(toDoItem)
         item = toDoItem
     }})
-    return item
-      
-    
+    return item    
 }
+function increasePriority(){
+    let tempItem = getSelected()
+    let index = toDoList.indexOf(tempItem)
+    if (index > 0){
+        tempItem = toDoList[index-1]
+        toDoList[index-1] = toDoList[index]
+        toDoList[index] = tempItem
+        toDoList[index].priority = index+1
+        toDoList[index-1].priority = index
+    }
+    displayList();
+    let editButton = document.querySelector('.editButton')
+    editButton.addEventListener('click',editItem)
+    let deleteButton = document.querySelector('.deleteButton')
+    deleteButton.addEventListener('click',removeItem)
+    let upButton = document.querySelector('.priorityUpButton')
+    upButton.addEventListener('click',increasePriority)
+    let downButton = document.querySelector('.priorityDownButton')
+    downButton.addEventListener('click',decreasePriority)
+}
+function decreasePriority(){
+    let tempItem = getSelected()
+    let index = toDoList.indexOf(tempItem)
+    if (index < (toDoList.length-1)){
+        tempItem = toDoList[index+1]
+        toDoList[index+1] = toDoList[index]
+        toDoList[index] = tempItem
+        toDoList[index].priority = index+1
+        toDoList[index+1].priority = index+2
+    }
+    displayList();
+    let editButton = document.querySelector('.editButton')
+    editButton.addEventListener('click',editItem)
+    let deleteButton = document.querySelector('.deleteButton')
+    deleteButton.addEventListener('click',removeItem)
+    let upButton = document.querySelector('.priorityUpButton')
+    upButton.addEventListener('click',increasePriority)
+    let downButton = document.querySelector('.priorityDownButton')
+    downButton.addEventListener('click',decreasePriority)
+}
+
+
+
 function selectItem(){
     toDoList.forEach((item)=>{item.selected = false})
     toDoList[this['data-key']].selected = true
@@ -38,9 +80,17 @@ function selectItem(){
     editButton.addEventListener('click',editItem)
     let deleteButton = document.querySelector('.deleteButton')
     deleteButton.addEventListener('click',removeItem)
+    let upButton = document.querySelector('.priorityUpButton')
+    upButton.addEventListener('click',increasePriority)
+    let downButton = document.querySelector('.priorityDownButton')
+    downButton.addEventListener('click',decreasePriority)
+
     console.log('item selected')
 
 }
+
+
+
 function removeItem(){
     toDoList.forEach((item,index)=>{
         if (item.selected){
@@ -50,7 +100,6 @@ function removeItem(){
     })
     deselectAll()
     displayList()
-    save()
 
 }
 function deselectAll(){
@@ -72,6 +121,7 @@ function displayList(){
     let newButton = document.querySelector('.addButton')
     newButton.addEventListener('click', displayNew)
     content.appendChild(toDoListView(toDoList))
+    save()
     
 }
 function toDoListView(list) {
@@ -79,7 +129,7 @@ function toDoListView(list) {
     list.forEach((item,index) => {
         let newItem = itemView(item)
         if (!item.selected){
-        newItem.addEventListener('click',selectItem)
+            newItem.addEventListener('click',selectItem)
         }
         newItem['data-key'] = index
         html.appendChild(newItem)
@@ -124,7 +174,7 @@ let toDoList= []
 if (localStorage.getItem('toDoList')){
    toDoList = JSON.parse(localStorage.getItem('toDoList'))
 }
-
+toDoList.forEach((item,index)=>{item.priority = index+1} )
 let content = document.querySelector('.content')
 deselectAll()
 displayList()

@@ -30,6 +30,20 @@ const itemView = (item) => {
         itemDeleteButton.classList.add('deleteButton')
         itemDiv.appendChild(itemDeleteButton)
         
+        let priorityContainerDiv = document.createElement('div')
+        priorityContainerDiv.classList.add('priorityContainer')
+        let priorityUpButton = document.createElement('button')
+        priorityUpButton.innerText= '^'
+        priorityUpButton.classList.add('priorityUpButton')
+        priorityContainerDiv.appendChild(priorityUpButton)
+        let priorityDiv = document.createElement('div')
+        priorityDiv.innerText = item.priority
+        priorityContainerDiv.appendChild(priorityDiv)
+        let priorityDownButton = document.createElement('button')
+        priorityDownButton.innerText='v'
+        priorityDownButton.classList.add('priorityDownButton')
+        priorityContainerDiv.appendChild(priorityDownButton)
+        itemDiv.appendChild(priorityContainerDiv)
     }else{
         let itemTitleDiv = document.createElement('div')
         itemTitleDiv.classList.add('itemTitleDiv')  
